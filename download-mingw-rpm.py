@@ -254,6 +254,8 @@ def main():
         fullname = os.path.join(root, filename)
         packagezip.write(fullname, fullname.replace(GetBaseDirectory(), ''))
     packagezip.close() #3.2: use with
+    with open(args[0] + '.zipname', 'w') as zipname:
+      zipname.write(packageBasename + '.zip\n')
     if options.clean:
       CleanExtracted()
 
