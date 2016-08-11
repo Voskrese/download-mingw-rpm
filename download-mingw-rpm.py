@@ -112,26 +112,26 @@ def packagesDownload(packageNames, withDependencies=False):
   return packageFilenames
 
 
-def _extractFile(filename, output_dir=_extractedCacheDirectory):
+def _extractFile(seven_zip, filename, output_dir=_extractedCacheDirectory):
   from subprocess import check_call
   try:
     with open('7z.log', 'w') as logfile:
-      check_call(['7z', 'x', '-o'+output_dir, '-y', filename], stdout=logfile)
+      check_call([seven_zip, 'x', '-o'+output_dir, '-y', filename], stdout=logfile)
     os.remove('7z.log')
   except:
     error('Failed to extract %s', filename)
 
 
-def packagesExtract(packageFilenames, srcpkg=False):
+def packagesExtract(packageFilenames, seven_zip, srcpkg=False):
   for packageFilename in packageFilenames :
-    warning('Extracting %s', packageFilename)
+    warning('Extracting %s using %s', packageFilename, seven_zip)
     cpioFilename = os.path.join(_extractedCacheDirectory, os.path.splitext(packageFilename)[0] + '.cpio')
     if not os.path.exists(cpioFilename):
-      _extractFile(os.path.join(_packageCacheDirectory, packageFilename))
+      _extractFile(seven_zip, os.path.join(_packageCacheDirectory, packageFilename))
     if srcpkg:
-      _extractFile(cpioFilename, os.path.join(_extractedFilesDirectory, os.path.splitext(packageFilename)[0]))
+      _extractFile(seven_zip, cpioFilename, os.path.join(_extractedFilesDirectory, os.path.splitext(packageFilename)[0]))
     else:
-      _extractFile(cpioFilename, _extractedFilesDirectory)
+      _extractFile(seven_zip, cpioFilename, _extractedFilesDirectory)
 
 
 def GetBaseDirectory():
@@ -194,6 +194,9 @@ def GetOptions():
   parser.add_option_group(outputOptions)
 
   # Other options
+  default_7zip = '7z'
+  parser.add_option("-7", "--7zip-program", dest="seven_zip", default=default_7zip,
+                    metavar="PROGRAM_PATH", help="Path to the 7-Zip executable, including the executable name [%default]")
   parser.add_option("-q", "--quiet", action="store_false", dest="verbose", default=True,
                     help="Don't print status messages to stderr")
 
@@ -233,7 +236,7 @@ def main():
   for package in sorted(packages):
     print(package)
 
-  packagesExtract(packages, options.srcpkg)
+  packagesExtract(packages, options.seven_zip, options.srcpkg)
   SetExecutableBit()
 
   if options.metadata:
