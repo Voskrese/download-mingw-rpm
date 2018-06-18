@@ -19,8 +19,11 @@ You'll now find a zlib1.dll file in a subdir of the current directory.
 A more complicated example to make a zipfile containing pulseaudio with its
 dependencies:
 
+old
 ./download-mingw-rpm.py -p home:mkbosmans:mingw32:pulseaudio --deps -z pulseaudio
 
+new
+./download-mingw-rpm.py -p home:mikedep333:branches:home:mkbosmans:mingw32:pulseaudio --deps -z pulseaudio
 
 -------------------------------------------------------------------------------
 
