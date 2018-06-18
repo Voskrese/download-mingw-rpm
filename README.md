@@ -20,9 +20,11 @@ A more complicated example to make a zipfile containing pulseaudio with its
 dependencies:
 
 old
+
 ./download-mingw-rpm.py -p home:mkbosmans:mingw32:pulseaudio --deps -z pulseaudio
 
 new
+
 ./download-mingw-rpm.py -p home:mikedep333:branches:home:mkbosmans:mingw32:pulseaudio --deps -z pulseaudio
 
 -------------------------------------------------------------------------------
