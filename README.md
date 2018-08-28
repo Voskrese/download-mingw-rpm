@@ -32,3 +32,5 @@ old
 1) https://build.opensuse.org/project/show?project=windows%3Amingw%3Awin32
 2) http://p7zip.sourceforge.net/
 3) http://www.7-zip.org/
+
+https://raw.githubusercontent.com/robol/MPSolve/master/tools/download-mingw-rpm.py
